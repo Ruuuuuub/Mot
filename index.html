@@ -86,18 +86,19 @@ button:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); ou
 
 /* ---------- Session ---------- */
 .topbar { display: flex; align-items: center; gap: 12px; }
-.back { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; width: 40px; height: 40px; display: grid; place-items: center; flex: none; }
+.home-btn { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; width: 40px; height: 40px; display: grid; place-items: center; flex: none; }
 .progress { flex: 1; display: grid; gap: 6px; }
 .progress-bar { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
 .progress-bar span { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s ease; }
 .progress-txt { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; }
 
-.dir { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; align-self: center; }
-.dir button { border: 0; background: none; padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.dir { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; }
+.dir button { border: 0; background: none; padding: 10px 8px; border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--muted); display: grid; gap: 2px; }
+.dir button small { font-size: 12px; font-weight: 500; opacity: .85; }
 .dir button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 
 .stage { perspective: 1400px; }
-.card { position: relative; width: 100%; min-height: 330px; border: 0; padding: 0; background: none; text-align: left; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3,.7,.3,1); display: grid; }
+.card { position: relative; width: 100%; min-height: 330px; cursor: pointer; border-radius: 18px; -webkit-tap-highlight-color: transparent; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3,.7,.3,1); display: grid; }
 .card.flipped { transform: rotateY(180deg); }
 .face {
   grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden;
@@ -379,37 +380,37 @@ function card() {
     <div class="scale">
       <div class="scale-cap"><span>${esc(g.label)} : ${esc(g.from)}</span><span>${esc(g.to)}</span></div>
       <div class="scale-track">${g.order.map(x => `<div class="${x === w.en ? "on" : ""}">${esc(x)}</div>`).join("")}</div>
-    </div>` : "";
+    </div>`;
   const answer = dir === "en"
     ? `${esc(w.fr)}${w.frMore ? `<small>ou : ${esc(w.frMore)}</small>` : ""}`
     : `${esc(w.en)}<small>${esc(w.fr)}${w.frMore ? ", " + esc(w.frMore) : ""}</small>`;
 
   app.innerHTML = `
     <div class="topbar">
-      <button class="back" id="back" aria-label="Retour à l'accueil">←</button>
+      <button class="home-btn" id="back" aria-label="Retour à l'accueil">←</button>
       <div class="progress">
         <div class="progress-bar"><span style="width:${s.done / s.total * 100}%"></span></div>
         <div class="progress-txt"><span>${esc(s.deck.name)}</span><span>${s.done} / ${s.total}</span></div>
       </div>
     </div>
-    <div class="dir" role="group" aria-label="Sens des cartes">
-      <button id="d-en" aria-pressed="${dir === "en"}">Anglais → Français</button>
-      <button id="d-fr" aria-pressed="${dir === "fr"}">Français → Anglais</button>
+    <div class="dir" role="tablist" aria-label="Sens des cartes">
+      <button id="d-en" role="tab" aria-pressed="${dir === "en"}" aria-selected="${dir === "en"}">Carte en anglais<small>réponse en français</small></button>
+      <button id="d-fr" role="tab" aria-pressed="${dir === "fr"}" aria-selected="${dir === "fr"}">Carte en français<small>réponse en anglais</small></button>
     </div>
     <div class="stage">
-      <button class="card" id="card" aria-label="Retourner la carte">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Retourner la carte">
         <div class="face front">
-          <div class="face-head"><span class="lang">${dir === "en" ? "EN" : "FR"}</span><span class="hint">${esc(s.deck.name)}</span></div>
+          <div class="face-head"><span class="lang">${dir === "en" ? "ANGLAIS" : "FRANÇAIS"}</span><span class="hint">${esc(s.deck.name)}</span></div>
           <div class="front-word"><strong>${esc(front)}</strong><span class="hint">Réfléchis, puis touche la carte</span></div>
         </div>
         <div class="face back" aria-hidden="true">
-          <div class="face-head"><span class="lang">${dir === "en" ? "FR" : "EN"}</span><span class="hint">${esc(front)}</span></div>
+          <div class="face-head"><span class="lang">${dir === "en" ? "EN FRANÇAIS" : "EN ANGLAIS"}</span><span class="hint">${esc(front)}</span></div>
           <div class="answer">${answer}</div>
           <div class="example">${esc(w.ex)}<em>${esc(w.exFr)}</em></div>
           ${w.tip ? `<div class="tip"><b>Astuce :</b> ${w.tip}</div>` : ""}
           ${scale}
         </div>
-      </button>
+      </div>
     </div>
     <div class="actions" id="actions">
       <button class="btn-flip" id="flip">Voir la réponse</button>
@@ -490,7 +491,7 @@ function finish() {
 
 document.addEventListener("keydown", e => {
   if (!session || !document.getElementById("card")) return;
-  if (e.key === " " || e.key === "Enter") { if (e.target.tagName !== "BUTTON" || e.target.id === "card") { e.preventDefault(); flip(); } }
+  if (e.key === " " || e.key === "Enter") { if (e.target.tagName !== "BUTTON") { e.preventDefault(); flip(); } }
   else if (e.key === "1") answer(false);
   else if (e.key === "2") answer(true);
 });
