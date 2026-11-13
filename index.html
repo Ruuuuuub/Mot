@@ -193,6 +193,14 @@ const GROUPS = {
       line: "« laïne » → une ligne, une file d'attente"
     }
   },
+  carriere: {
+    kind: "compare",
+    label: "Monter ou descendre",
+    items: {
+      promoted: "pro- → on monte (promu)",
+      demoted: "de- → on descend (rétrogradé)"
+    }
+  },
   voisin: {
     kind: "compare",
     label: "Même famille, rôle différent",
@@ -291,6 +299,62 @@ const DECKS = [
         exFr: "Il y a beaucoup de restaurants dans le quartier.",
         tip: "C'est un <b>nom</b>. Orthographe : un seul « o » après le b → neigh-<b>bor</b>-hood. En anglais britannique : <i>neighbourhood</i>.",
         group: "voisin"
+      },
+      {
+        en: "protected", fr: "protégé", frMore: "",
+        ex: "All personal data is protected.",
+        exFr: "Toutes les données personnelles sont protégées.",
+        tip: "Facile : ça ressemble au français. Le verbe est <i>to protect</i> (protéger), le nom <i>protection</i>."
+      },
+      {
+        en: "departed", fr: "parti", frMore: "a quitté (un lieu)",
+        ex: "The train departed on time.",
+        exFr: "Le train est parti à l'heure.",
+        tip: "Vient de <i>to depart</i> (partir), très utilisé pour les trains et les avions. À l'aéroport : <i>Departures</i> = Départs."
+      },
+      {
+        en: "demoted", fr: "rétrogradé", frMore: "descendu de poste",
+        ex: "He was demoted after the mistake.",
+        exFr: "Il a été rétrogradé après l'erreur.",
+        tip: "C'est le contraire de <b>promoted</b>. On perd un poste, on descend.",
+        group: "carriere"
+      },
+      {
+        en: "promoted", fr: "promu", frMore: "(un produit) promu, mis en avant",
+        ex: "She was promoted to sales manager.",
+        exFr: "Elle a été promue directrice des ventes.",
+        tip: "Deux sens au TOEIC : monter en poste (<i>get promoted</i>), ou faire la promotion d'un produit (<i>promote a product</i>).",
+        group: "carriere"
+      },
+      {
+        en: "antiquated", fr: "dépassé", frMore: "vieillot, obsolète",
+        ex: "The office still uses antiquated equipment.",
+        exFr: "Le bureau utilise encore du matériel dépassé.",
+        tip: "Ressemble à « antique », mais c'est <b>négatif</b> : trop vieux, plus adapté."
+      },
+      {
+        en: "ephemeral", fr: "éphémère", frMore: "qui dure peu",
+        ex: "Social media trends are often ephemeral.",
+        exFr: "Les tendances des réseaux sociaux sont souvent éphémères.",
+        tip: "Même sens qu'en français. Se prononce « i-fé-meu-reul »."
+      },
+      {
+        en: "complex", fr: "complexe", frMore: "compliqué ; (nom) ensemble de bâtiments",
+        ex: "The new software is too complex for beginners.",
+        exFr: "Le nouveau logiciel est trop compliqué pour les débutants.",
+        tip: "Piège TOEIC : comme nom, <i>an office complex</i> = un ensemble de bureaux, <i>an apartment complex</i> = une résidence."
+      },
+      {
+        en: "vivacious", fr: "plein de vie", frMore: "pétillant, enjoué",
+        ex: "Our new receptionist is vivacious and friendly.",
+        exFr: "Notre nouvelle réceptionniste est pétillante et sympathique.",
+        tip: "Se dit d'une <b>personne</b> pleine d'énergie, toujours positif. Ne pas traduire par « vivace »."
+      },
+      {
+        en: "establishment", fr: "établissement", frMore: "création (d'une entreprise)",
+        ex: "This establishment has been open since 1985.",
+        exFr: "Cet établissement est ouvert depuis 1985.",
+        tip: "Deux sens : un lieu (restaurant, hôtel, magasin), ou le fait de créer quelque chose : <i>the establishment of a new branch</i> = la création d'une nouvelle agence."
       }
     ]
   }
