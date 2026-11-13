@@ -128,6 +128,11 @@ button:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); ou
 .scale-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
 .scale-track div { text-align: center; font-size: 12px; padding: 5px 2px; border-radius: 6px; background: var(--bg); color: var(--muted); font-weight: 600; overflow-wrap: anywhere; }
 .scale-track div.on { background: var(--accent); color: #fff; }
+.compare { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.compare li { display: grid; grid-template-columns: minmax(90px, auto) 1fr; gap: 10px; align-items: baseline; font-size: 13px; padding: 6px 10px; border-radius: 8px; background: var(--bg); color: var(--muted); }
+.compare li b { color: var(--ink); overflow-wrap: anywhere; }
+.compare li.on { background: var(--accent); color: #fff; }
+.compare li.on b { color: #fff; }
 .scale-cap { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
 
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -169,6 +174,31 @@ const GROUPS = {
     from: "très peu",
     to: "beaucoup",
     order: ["barely", "slightly", "moderately", "greatly"]
+  },
+  liaison: {
+    kind: "compare",
+    label: "Ne pas confondre",
+    items: {
+      therefore: "donc → une conséquence",
+      however: "cependant → une opposition"
+    }
+  },
+  sons: {
+    kind: "compare",
+    label: "Ils se ressemblent, à l'oral aussi",
+    items: {
+      lane: "« lèïne » → une voie, une route",
+      loan: "« lône » → un prêt d'argent",
+      line: "« laïne » → une ligne, une file d'attente"
+    }
+  },
+  voisin: {
+    kind: "compare",
+    label: "Même famille, rôle différent",
+    items: {
+      neighboring: "adjectif → voisin (une ville voisine)",
+      neighborhood: "nom → le quartier"
+    }
   }
 };
 
@@ -205,6 +235,61 @@ const DECKS = [
         exFr: "Le nouveau produit a eu un succès moyen.",
         tip: "Ni beaucoup ni peu : <b>au milieu</b>. Pense à « modéré ».",
         group: "degre"
+      },
+      {
+        en: "target", fr: "objectif", frMore: "cible ; (verbe) cibler",
+        ex: "We met our sales targets this quarter.",
+        exFr: "Nous avons atteint nos objectifs de vente ce trimestre.",
+        tip: "Au TOEIC, c'est souvent un objectif chiffré : <i>sales target</i>, <i>meet / reach a target</i> (= atteindre un objectif)."
+      },
+      {
+        en: "therefore", fr: "donc", frMore: "par conséquent",
+        ex: "The flight was canceled; therefore, the meeting was postponed.",
+        exFr: "Le vol a été annulé ; par conséquent, la réunion a été reportée.",
+        tip: "<b>Therefore</b> annonce une <b>conséquence</b> (A, donc B). Ne pas confondre avec <i>however</i>.",
+        group: "liaison"
+      },
+      {
+        en: "however", fr: "cependant", frMore: "pourtant, toutefois",
+        ex: "The hotel is expensive. However, the service is excellent.",
+        exFr: "L'hôtel est cher. Cependant, le service est excellent.",
+        tip: "<b>However</b> annonce une <b>opposition</b> (A, mais B). Au TOEIC, regarde si la 2ᵉ phrase va dans le même sens (therefore) ou dans l'autre sens (however).",
+        group: "liaison"
+      },
+      {
+        en: "lane", fr: "voie", frMore: "petite route, couloir",
+        ex: "The left lane is closed for repairs.",
+        exFr: "La voie de gauche est fermée pour travaux.",
+        tip: "Pense à la route : <i>traffic lane</i> = voie de circulation. Se prononce « lèïne ».",
+        group: "sons"
+      },
+      {
+        en: "loan", fr: "prêt", frMore: "emprunt (d'argent)",
+        ex: "The bank approved our loan.",
+        exFr: "La banque a accepté notre prêt.",
+        tip: "Toujours une histoire d'<b>argent</b> prêté. Se prononce « lône ». Le verbe « prêter » se dit <i>to lend</i>.",
+        group: "sons"
+      },
+      {
+        en: "line", fr: "ligne", frMore: "file d'attente, gamme",
+        ex: "Customers waited in line for an hour.",
+        exFr: "Les clients ont fait la queue pendant une heure.",
+        tip: "Plusieurs sens au TOEIC : <i>wait in line</i> (faire la queue), <i>product line</i> (gamme de produits), <i>phone line</i> (ligne téléphonique). Se prononce « laïne ».",
+        group: "sons"
+      },
+      {
+        en: "neighboring", fr: "voisin", frMore: "avoisinant (adjectif)",
+        ex: "The conference will be held in a neighboring city.",
+        exFr: "La conférence aura lieu dans une ville voisine.",
+        tip: "C'est un <b>adjectif</b> : il se place devant un nom (<i>neighboring city, neighboring country</i>). En anglais britannique : <i>neighbouring</i>.",
+        group: "voisin"
+      },
+      {
+        en: "neighborhood", fr: "quartier", frMore: "voisinage (nom)",
+        ex: "There are many restaurants in the neighborhood.",
+        exFr: "Il y a beaucoup de restaurants dans le quartier.",
+        tip: "C'est un <b>nom</b>. Orthographe : un seul « o » après le b → neigh-<b>bor</b>-hood. En anglais britannique : <i>neighbourhood</i>.",
+        group: "voisin"
       }
     ]
   }
@@ -285,7 +370,12 @@ function card() {
   const w = s.queue[0];
   const front = dir === "en" ? w.en : w.fr;
   const g = w.group && GROUPS[w.group];
-  const scale = g ? `
+  const scale = !g ? "" : g.kind === "compare" ? `
+    <div class="scale">
+      <div class="scale-cap"><span>${esc(g.label)}</span></div>
+      <ul class="compare">${Object.entries(g.items).map(([x, m]) =>
+        `<li class="${x === w.en ? "on" : ""}"><b>${esc(x)}</b><span>${esc(m)}</span></li>`).join("")}</ul>
+    </div>` : `
     <div class="scale">
       <div class="scale-cap"><span>${esc(g.label)} : ${esc(g.from)}</span><span>${esc(g.to)}</span></div>
       <div class="scale-track">${g.order.map(x => `<div class="${x === w.en ? "on" : ""}">${esc(x)}</div>`).join("")}</div>
