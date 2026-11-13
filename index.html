@@ -201,6 +201,41 @@ const GROUPS = {
       demoted: "de- → on descend (rétrogradé)"
     }
   },
+  tude: {
+    kind: "compare",
+    label: "Même fin en -tude, sens différents",
+    items: {
+      fortitude: "le courage, la force morale",
+      latitude: "la marge de manœuvre",
+      magnitude: "l'ampleur, l'importance"
+    }
+  },
+  ity: {
+    kind: "compare",
+    label: "Ils se ressemblent : -ity",
+    items: {
+      velocity: "la vitesse, le rythme",
+      vicinity: "les environs, à proximité",
+      commodity: "la matière première (faux ami)"
+    }
+  },
+  grade: {
+    kind: "compare",
+    label: "Monter ou descendre de gamme",
+    items: {
+      upgrading: "passer à la catégorie supérieure",
+      downgrading: "passer à la catégorie inférieure"
+    }
+  },
+  valeur: {
+    kind: "compare",
+    label: "Mettre en valeur ou affaiblir",
+    items: {
+      highlight: "mettre en avant, souligner",
+      emphasizing: "insister sur, mettre l'accent sur",
+      undermine: "fragiliser, saper"
+    }
+  },
   voisin: {
     kind: "compare",
     label: "Même famille, rôle différent",
@@ -355,6 +390,129 @@ const DECKS = [
         ex: "This establishment has been open since 1985.",
         exFr: "Cet établissement est ouvert depuis 1985.",
         tip: "Deux sens : un lieu (restaurant, hôtel, magasin), ou le fait de créer quelque chose : <i>the establishment of a new branch</i> = la création d'une nouvelle agence."
+      },
+      {
+        en: "fortitude", fr: "courage", frMore: "force morale, ténacité",
+        ex: "The team showed great fortitude during the restructuring.",
+        exFr: "L'équipe a fait preuve d'un grand courage pendant la restructuration.",
+        tip: "Le courage pour <b>tenir dans la difficulté</b>, pas la force physique.",
+        group: "tude"
+      },
+      {
+        en: "velocity", fr: "vitesse", frMore: "rythme",
+        ex: "The velocity of sales increased after the campaign.",
+        exFr: "Le rythme des ventes a augmenté après la campagne.",
+        tip: "Au TOEIC, souvent la vitesse à laquelle quelque chose avance : <i>velocity of sales</i>, <i>velocity of money</i>.",
+        group: "ity"
+      },
+      {
+        en: "latitude", fr: "marge de manœuvre", frMore: "liberté d'action",
+        ex: "Managers have some latitude in setting their budgets.",
+        exFr: "Les managers ont une certaine marge de manœuvre pour fixer leur budget.",
+        tip: "Au TOEIC, ce n'est presque jamais la géographie : <i>give someone latitude</i> = lui laisser de la liberté.",
+        group: "tude"
+      },
+      {
+        en: "magnitude", fr: "ampleur", frMore: "importance",
+        ex: "We underestimated the magnitude of the problem.",
+        exFr: "Nous avons sous-estimé l'ampleur du problème.",
+        tip: "Sert à dire à quel point quelque chose est grand ou grave : <i>a project of this magnitude</i> = un projet de cette ampleur.",
+        group: "tude"
+      },
+      {
+        en: "anomaly", fr: "anomalie", frMore: "erreur, chose anormale (chiffres, facture)",
+        ex: "The accountant found an anomaly in the invoice.",
+        exFr: "Le comptable a trouvé une anomalie dans la facture."
+      },
+      {
+        en: "commodity", fr: "matière première", frMore: "produit de base (pétrole, blé, café…)",
+        ex: "Oil is one of the most traded commodities in the world.",
+        exFr: "Le pétrole est l'une des matières premières les plus échangées au monde.",
+        tip: "<b>Faux ami</b> : ce n'est pas « commodité ». « Commodité » se dit <i>convenience</i>.",
+        group: "ity"
+      },
+      {
+        en: "vicinity", fr: "environs", frMore: "à proximité, dans le coin",
+        ex: "There are several restaurants in the vicinity of the hotel.",
+        exFr: "Il y a plusieurs restaurants à proximité de l'hôtel.",
+        tip: "Presque toujours dans l'expression <i>in the vicinity of</i> = près de, aux alentours de.",
+        group: "ity"
+      },
+      {
+        en: "avoiding", fr: "éviter", frMore: "en évitant",
+        ex: "Avoiding delays is our top priority.",
+        exFr: "Éviter les retards est notre priorité absolue.",
+        tip: "Règle TOEIC : <i>avoid</i> est suivi d'un verbe en <b>-ing</b> : <i>avoid making</i>, jamais <i>avoid to make</i>."
+      },
+      {
+        en: "downgrading", fr: "passer à une catégorie inférieure", frMore: "déclasser, réduire (une formule, une note)",
+        ex: "We are downgrading our subscription to the basic plan.",
+        exFr: "Nous passons à la formule de base de notre abonnement.",
+        tip: "Contraire : <b>upgrading</b> (passer à la catégorie supérieure, ex. un surclassement à l'hôtel).",
+        group: "grade"
+      },
+      {
+        en: "emphasizing", fr: "mettre l'accent sur", frMore: "insister sur, souligner",
+        ex: "The CEO kept emphasizing the importance of customer service.",
+        exFr: "Le PDG n'a cessé d'insister sur l'importance du service client.",
+        tip: "Piège : <i>emphasize</i> s'emploie <b>sans « on »</b> (<i>emphasize the importance</i>). Mais on dit <i>put emphasis on</i>.",
+        group: "valeur"
+      },
+      {
+        en: "clarifying", fr: "clarifier", frMore: "préciser, éclaircir",
+        ex: "Thank you for clarifying the terms of the contract.",
+        exFr: "Merci d'avoir précisé les conditions du contrat.",
+        tip: "Très fréquent dans les e-mails : <i>Could you clarify…?</i> = Pourriez-vous préciser… ?"
+      },
+      {
+        en: "withholding", fr: "retenir", frMore: "ne pas donner (une info, un paiement, un impôt)",
+        ex: "The client is withholding payment until the work is finished.",
+        exFr: "Le client retient le paiement jusqu'à la fin des travaux.",
+        tip: "<i>Withholding tax</i> = la retenue à la source (l'impôt retenu directement sur le salaire)."
+      },
+      {
+        en: "detailing", fr: "détaillant", frMore: "qui détaille, qui décrit en détail",
+        ex: "Please send me a report detailing the costs.",
+        exFr: "Merci de m'envoyer un rapport détaillant les coûts.",
+        tip: "Souvent juste après un nom : <i>a document detailing…</i> = un document qui détaille…"
+      },
+      {
+        en: "undermine", fr: "fragiliser", frMore: "saper, affaiblir",
+        ex: "Late deliveries could undermine customer trust.",
+        exFr: "Les retards de livraison pourraient fragiliser la confiance des clients.",
+        tip: "Le vrai contraire est <b>strengthen</b> (renforcer). <i>Highlight</i> veut dire autre chose : mettre en avant.",
+        group: "valeur"
+      },
+      {
+        en: "highlight", fr: "mettre en avant", frMore: "souligner ; (nom) le point fort",
+        ex: "The presentation highlighted our strong sales in Asia.",
+        exFr: "La présentation a mis en avant nos bonnes ventes en Asie.",
+        tip: "Aussi un nom : <i>the highlight of the conference</i> = le moment fort de la conférence.",
+        group: "valeur"
+      },
+      {
+        en: "diminish", fr: "diminuer", frMore: "réduire, baisser",
+        ex: "Demand for printed catalogs has diminished.",
+        exFr: "La demande de catalogues papier a diminué.",
+        tip: "Synonymes fréquents au TOEIC : <i>decrease, decline, reduce</i>."
+      },
+      {
+        en: "fortunate", fr: "chanceux", frMore: "avoir la chance de",
+        ex: "We are fortunate to have such loyal customers.",
+        exFr: "Nous avons la chance d'avoir des clients aussi fidèles.",
+        tip: "<i>Fortunately</i> = heureusement. Contraire : <i>unfortunate</i> (regrettable, malchanceux). Rien à voir avec « fortuné » (riche = <i>wealthy</i>)."
+      },
+      {
+        en: "adverse", fr: "défavorable", frMore: "négatif, néfaste",
+        ex: "The event was canceled due to adverse weather conditions.",
+        exFr: "L'événement a été annulé en raison de conditions météo défavorables.",
+        tip: "<i>Adverse weather, adverse effects</i>. Ne pas confondre avec <b>averse</b> (réticent : <i>averse to risk</i> = qui n'aime pas le risque)."
+      },
+      {
+        en: "aligned", fr: "en accord avec", frMore: "cohérent avec",
+        ex: "Our budget is aligned with the company's strategy.",
+        exFr: "Notre budget est cohérent avec la stratégie de l'entreprise.",
+        tip: "Toujours suivi de <b>with</b> : <i>aligned with</i>."
       }
     ]
   }
