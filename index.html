@@ -1,0 +1,409 @@
+<title>Mot · Cartes TOEIC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout : une colonne centrée, la carte façon fiche bristol au centre, actions sous la carte */
+:root {
+  --bg: #eef1f6;
+  --surface: #ffffff;
+  --ink: #18203a;
+  --muted: #5d6680;
+  --line: #d7dce8;
+  --accent: #2f5bd3;
+  --accent-soft: #e3eafc;
+  --rule-red: #e0706b;
+  --rule-blue: #c9d6f2;
+  --good: #1f8a5b;
+  --good-soft: #dff3ea;
+  --bad: #c2413b;
+  --bad-soft: #fbe4e2;
+  --shadow: 0 1px 2px rgba(24,32,58,.06), 0 8px 24px rgba(24,32,58,.08);
+  --f-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #10142a; --surface: #1a2040; --ink: #e9ecf7; --muted: #a2aac4; --line: #2c345a;
+  --accent: #7d9cff; --accent-soft: #252f5c; --rule-red: #c9605c; --rule-blue: #2b3765;
+  --good: #4fcf94; --good-soft: #173a2e; --bad: #ff8079; --bad-soft: #43201f;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #10142a; --surface: #1a2040; --ink: #e9ecf7; --muted: #a2aac4; --line: #2c345a;
+  --accent: #7d9cff; --accent-soft: #252f5c; --rule-red: #c9605c; --rule-blue: #2b3765;
+  --good: #4fcf94; --good-soft: #173a2e; --bad: #ff8079; --bad-soft: #43201f;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+/* ---------- Accueil ---------- */
+.brand { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.brand h1 { font-size: 28px; font-weight: 700; }
+.brand p { margin: 0; color: var(--muted); font-size: 14px; }
+.deck {
+  display: grid; gap: 14px; text-align: left; width: 100%;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px;
+  box-shadow: var(--shadow); transition: transform .15s ease;
+}
+.deck:hover { transform: translateY(-2px); }
+.deck-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.deck h2 { font-size: 24px; }
+.deck .count { font-size: 14px; color: var(--muted); }
+.deck .go { background: var(--accent); color: #fff; border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+.mastery { display: flex; gap: 4px; height: 8px; border-radius: 999px; overflow: hidden; background: var(--line); }
+.mastery span { display: block; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.lv0 { background: var(--bad); } .lv1 { background: #e3a23b; } .lv2 { background: var(--accent); } .lv3 { background: var(--good); }
+
+.section-title { display: flex; justify-content: space-between; align-items: baseline; }
+.section-title h3 { font-size: 16px; }
+.words { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.words li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px 16px; border-top: 1px solid var(--line); align-items: center; }
+.words li:first-child { border-top: 0; }
+.words .en { font-weight: 600; }
+.words .fr { color: var(--muted); font-size: 14px; grid-column: 1; }
+.pill { grid-row: 1 / span 2; grid-column: 2; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.p0 { background: var(--bad-soft); color: var(--bad); }
+.pill.p1 { background: #fbefd9; color: #9a6410; }
+.pill.p2 { background: var(--accent-soft); color: var(--accent); }
+.pill.p3 { background: var(--good-soft); color: var(--good); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pill.p1 { background: #3f3118; color: #f0c06a; } }
+:root[data-theme="dark"] .pill.p1 { background: #3f3118; color: #f0c06a; }
+.link-btn { background: none; border: 0; color: var(--accent); font-weight: 600; font-size: 14px; padding: 4px; }
+
+/* ---------- Session ---------- */
+.topbar { display: flex; align-items: center; gap: 12px; }
+.back { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; width: 40px; height: 40px; display: grid; place-items: center; flex: none; }
+.progress { flex: 1; display: grid; gap: 6px; }
+.progress-bar { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.progress-bar span { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s ease; }
+.progress-txt { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; }
+
+.dir { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; align-self: center; }
+.dir button { border: 0; background: none; padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.dir button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+.stage { perspective: 1400px; }
+.card { position: relative; width: 100%; min-height: 330px; border: 0; padding: 0; background: none; text-align: left; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3,.7,.3,1); display: grid; }
+.card.flipped { transform: rotateY(180deg); }
+.face {
+  grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); border: 1px solid var(--line);
+  padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;
+  /* fiche bristol : une ligne rouge en haut, des lignes bleues dessous */
+  background-image:
+    linear-gradient(var(--rule-red), var(--rule-red)),
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule-blue) 31px 32px);
+  background-size: 100% 2px, 100% 100%;
+  background-position: 0 58px, 0 60px;
+  background-repeat: no-repeat, no-repeat;
+}
+.face.back { transform: rotateY(180deg); }
+.face-head { display: flex; justify-content: space-between; align-items: center; height: 24px; }
+.lang { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 6px; }
+.front-word { flex: 1; display: grid; place-items: center; text-align: center; gap: 8px; padding-block: 24px; }
+.front-word strong { font-family: var(--f-display); font-size: clamp(32px, 9vw, 46px); font-weight: 700; line-height: 1.1; word-break: break-word; }
+.hint { font-size: 14px; color: var(--muted); }
+.answer { font-family: var(--f-display); font-size: 28px; font-weight: 700; line-height: 1.2; margin-top: 10px; }
+.answer small { display: block; font-family: var(--f-body); font-size: 15px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.example { background: var(--surface); border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; font-size: 15px; }
+.example em { display: block; color: var(--muted); font-style: normal; font-size: 14px; }
+.tip { background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+.tip b { color: var(--accent); }
+
+.scale { display: grid; gap: 6px; }
+.scale-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.scale-track div { text-align: center; font-size: 12px; padding: 5px 2px; border-radius: 6px; background: var(--bg); color: var(--muted); font-weight: 600; overflow-wrap: anywhere; }
+.scale-track div.on { background: var(--accent); color: #fff; }
+.scale-cap { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.actions button { border: 0; border-radius: 14px; padding: 14px 10px; font-weight: 600; font-size: 16px; }
+.btn-bad { background: var(--bad-soft); color: var(--bad); }
+.btn-good { background: var(--good-soft); color: var(--good); }
+.btn-flip { grid-column: 1 / -1; background: var(--accent); color: #fff; }
+.keys { text-align: center; font-size: 12px; color: var(--muted); }
+kbd { font-family: var(--f-body); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--surface); }
+
+/* ---------- Fin ---------- */
+.done { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px 22px; box-shadow: var(--shadow); display: grid; gap: 16px; text-align: center; }
+.done h2 { font-size: 26px; }
+.score { font-family: var(--f-display); font-size: 56px; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.done p { margin: 0; color: var(--muted); }
+.done .row { display: grid; gap: 10px; }
+.done button { border: 0; border-radius: 14px; padding: 14px; font-weight: 600; }
+.primary { background: var(--accent); color: #fff; }
+.secondary { background: var(--accent-soft); color: var(--accent); }
+.missed { list-style: none; padding: 0; margin: 0; text-align: left; display: grid; gap: 6px; }
+.missed li { background: var(--bad-soft); border-radius: 10px; padding: 8px 12px; font-size: 14px; }
+.missed b { color: var(--bad); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .deck, .progress-bar span { transition: none; }
+}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============================================================
+   LES MOTS — ajoute les nouveaux ici
+   group : les mots d'un même groupe s'affichent sur une échelle
+   ============================================================ */
+const GROUPS = {
+  degre: {
+    label: "Intensité",
+    from: "très peu",
+    to: "beaucoup",
+    order: ["barely", "slightly", "moderately", "greatly"]
+  }
+};
+
+const DECKS = [
+  {
+    id: "toeic",
+    name: "TOEIC",
+    sub: "Les mots que tu enregistres pour le TOEIC",
+    words: [
+      {
+        en: "slightly", fr: "légèrement", frMore: "un peu",
+        ex: "Sales increased slightly in March.",
+        exFr: "Les ventes ont légèrement augmenté en mars.",
+        tip: "Un petit changement, mais réel. Très fréquent au TOEIC avec les chiffres : <i>rise / fall / increase slightly</i>.",
+        group: "degre"
+      },
+      {
+        en: "barely", fr: "à peine", frMore: "tout juste",
+        ex: "We barely had time to finish the report.",
+        exFr: "Nous avons à peine eu le temps de finir le rapport.",
+        tip: "Ne pas confondre avec <b>rarely</b> (= rarement). <i>Barely</i> a déjà un sens presque négatif : on n'ajoute pas « not ».",
+        group: "degre"
+      },
+      {
+        en: "greatly", fr: "grandement", frMore: "énormément, beaucoup",
+        ex: "Your help is greatly appreciated.",
+        exFr: "Votre aide est grandement appréciée.",
+        tip: "Formule classique des e-mails pros au TOEIC : <i>greatly appreciated</i>.",
+        group: "degre"
+      },
+      {
+        en: "moderately", fr: "modérément", frMore: "moyennement",
+        ex: "The new product was moderately successful.",
+        exFr: "Le nouveau produit a eu un succès moyen.",
+        tip: "Ni beaucoup ni peu : <b>au milieu</b>. Pense à « modéré ».",
+        group: "degre"
+      }
+    ]
+  }
+];
+
+/* ============================================================
+   Mémoire de progression (dans ce navigateur)
+   niveau 0 = à revoir, 1 = en cours, 2 = presque, 3 = acquis
+   ============================================================ */
+const STORE_KEY = "mot-progress-v1";
+const LEVELS = ["À revoir", "En cours", "Presque", "Acquis"];
+let progress = {};
+try { progress = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { progress = {}; }
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(progress)); } catch (e) {} }
+function key(deck, w) { return deck.id + ":" + w.en; }
+function level(deck, w) { const p = progress[key(deck, w)]; return p ? p.lvl : -1; } // -1 = jamais vu
+
+let dir = "en"; // "en" = anglais → français ; "fr" = français → anglais
+try { dir = localStorage.getItem("mot-dir") || "en"; } catch (e) {}
+
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ---------- Accueil ---------- */
+function home() {
+  session = null;
+  let html = `<header class="brand"><h1>Mot</h1><p>Retourne la carte, sois honnête.</p></header>`;
+  for (const d of DECKS) {
+    const counts = [0, 0, 0, 0];
+    let unseen = 0;
+    d.words.forEach(w => { const l = level(d, w); l < 0 ? unseen++ : counts[l]++; });
+    const n = d.words.length;
+    const bar = counts.map((c, i) => c ? `<span class="lv${i}" style="width:${c / n * 100}%"></span>` : "").join("");
+    html += `
+      <button class="deck" data-deck="${d.id}">
+        <div class="deck-top">
+          <div><h2>${esc(d.name)}</h2><div class="count">${n} mot${n > 1 ? "s" : ""} · ${esc(d.sub)}</div></div>
+          <span class="go">Réviser</span>
+        </div>
+        <div class="mastery" aria-hidden="true">${bar}</div>
+        <div class="legend">
+          ${counts.map((c, i) => `<span><i class="lv${i}"></i>${LEVELS[i]} ${c}</span>`).join("")}
+          ${unseen ? `<span>Pas encore vus ${unseen}</span>` : ""}
+        </div>
+      </button>
+      <div class="section-title"><h3>Les mots ${esc(d.name)}</h3>
+        <button class="link-btn" data-reset="${d.id}">Remettre à zéro</button></div>
+      <ul class="words">
+        ${d.words.map(w => { const l = level(d, w); return `
+          <li><span class="en">${esc(w.en)}</span><span class="fr">${esc(w.fr)}${w.frMore ? ", " + esc(w.frMore) : ""}</span>
+          ${l < 0 ? `<span class="pill p1" style="opacity:.6">Nouveau</span>` : `<span class="pill p${l}">${LEVELS[l]}</span>`}</li>`; }).join("")}
+      </ul>`;
+  }
+  app.innerHTML = html;
+  app.querySelectorAll("[data-deck]").forEach(b => b.onclick = () => start(DECKS.find(d => d.id === b.dataset.deck)));
+  app.querySelectorAll("[data-reset]").forEach(b => b.onclick = () => askReset(b, DECKS.find(d => d.id === b.dataset.reset)));
+}
+function askReset(btn, deck) {
+  if (btn.dataset.sure) {
+    deck.words.forEach(w => delete progress[key(deck, w)]); save(); home();
+  } else { btn.dataset.sure = "1"; btn.textContent = "Sûr ? Clique encore"; btn.style.color = "var(--bad)"; }
+}
+
+/* ---------- Session ---------- */
+let session = null;
+function start(deck, onlyWords) {
+  const pool = onlyWords || deck.words;
+  // les mots les moins connus passent en premier
+  const queue = shuffle(pool).sort((a, b) => level(deck, a) - level(deck, b));
+  session = { deck, queue, total: pool.length, done: 0, firstTry: {}, flipped: false };
+  card();
+}
+
+function card() {
+  const s = session;
+  if (!s.queue.length) return finish();
+  const w = s.queue[0];
+  const front = dir === "en" ? w.en : w.fr;
+  const g = w.group && GROUPS[w.group];
+  const scale = g ? `
+    <div class="scale">
+      <div class="scale-cap"><span>${esc(g.label)} : ${esc(g.from)}</span><span>${esc(g.to)}</span></div>
+      <div class="scale-track">${g.order.map(x => `<div class="${x === w.en ? "on" : ""}">${esc(x)}</div>`).join("")}</div>
+    </div>` : "";
+  const answer = dir === "en"
+    ? `${esc(w.fr)}${w.frMore ? `<small>ou : ${esc(w.frMore)}</small>` : ""}`
+    : `${esc(w.en)}<small>${esc(w.fr)}${w.frMore ? ", " + esc(w.frMore) : ""}</small>`;
+
+  app.innerHTML = `
+    <div class="topbar">
+      <button class="back" id="back" aria-label="Retour à l'accueil">←</button>
+      <div class="progress">
+        <div class="progress-bar"><span style="width:${s.done / s.total * 100}%"></span></div>
+        <div class="progress-txt"><span>${esc(s.deck.name)}</span><span>${s.done} / ${s.total}</span></div>
+      </div>
+    </div>
+    <div class="dir" role="group" aria-label="Sens des cartes">
+      <button id="d-en" aria-pressed="${dir === "en"}">Anglais → Français</button>
+      <button id="d-fr" aria-pressed="${dir === "fr"}">Français → Anglais</button>
+    </div>
+    <div class="stage">
+      <button class="card" id="card" aria-label="Retourner la carte">
+        <div class="face front">
+          <div class="face-head"><span class="lang">${dir === "en" ? "EN" : "FR"}</span><span class="hint">${esc(s.deck.name)}</span></div>
+          <div class="front-word"><strong>${esc(front)}</strong><span class="hint">Réfléchis, puis touche la carte</span></div>
+        </div>
+        <div class="face back" aria-hidden="true">
+          <div class="face-head"><span class="lang">${dir === "en" ? "FR" : "EN"}</span><span class="hint">${esc(front)}</span></div>
+          <div class="answer">${answer}</div>
+          <div class="example">${esc(w.ex)}<em>${esc(w.exFr)}</em></div>
+          ${w.tip ? `<div class="tip"><b>Astuce :</b> ${w.tip}</div>` : ""}
+          ${scale}
+        </div>
+      </button>
+    </div>
+    <div class="actions" id="actions">
+      <button class="btn-flip" id="flip">Voir la réponse</button>
+    </div>
+    <div class="keys"><kbd>Espace</kbd> retourner · <kbd>1</kbd> pas su · <kbd>2</kbd> su</div>`;
+
+  document.getElementById("back").onclick = home;
+  document.getElementById("card").onclick = flip;
+  document.getElementById("flip").onclick = flip;
+  document.getElementById("d-en").onclick = () => setDir("en");
+  document.getElementById("d-fr").onclick = () => setDir("fr");
+  s.flipped = false;
+}
+
+function setDir(d) {
+  dir = d; try { localStorage.setItem("mot-dir", d); } catch (e) {}
+  card();
+}
+
+function flip() {
+  const s = session; if (!s) return;
+  const c = document.getElementById("card");
+  s.flipped = !s.flipped;
+  c.classList.toggle("flipped", s.flipped);
+  c.querySelector(".front").setAttribute("aria-hidden", s.flipped);
+  c.querySelector(".back").setAttribute("aria-hidden", !s.flipped);
+  if (s.flipped) {
+    document.getElementById("actions").innerHTML = `
+      <button class="btn-bad" id="no">✗ Je ne savais pas</button>
+      <button class="btn-good" id="yes">✓ Je savais</button>`;
+    document.getElementById("no").onclick = () => answer(false);
+    document.getElementById("yes").onclick = () => answer(true);
+  }
+}
+
+function answer(ok) {
+  const s = session; if (!s || !s.flipped) return;
+  const w = s.queue.shift();
+  const k = key(s.deck, w);
+  const cur = progress[k] ? progress[k].lvl : 0;
+  if (!(w.en in s.firstTry)) s.firstTry[w.en] = ok;
+  if (ok) {
+    progress[k] = { lvl: Math.min(3, cur + 1), t: Date.now() };
+    s.done++;
+  } else {
+    progress[k] = { lvl: 0, t: Date.now() };
+    // le mot raté revient un peu plus loin dans la même session
+    s.queue.splice(Math.min(2, s.queue.length), 0, w);
+  }
+  save();
+  card();
+}
+
+function finish() {
+  const s = session;
+  const words = s.deck.words.filter(w => w.en in s.firstTry);
+  const good = words.filter(w => s.firstTry[w.en]).length;
+  const missed = words.filter(w => !s.firstTry[w.en]);
+  app.innerHTML = `
+    <div class="done">
+      <span class="eyebrow">Session terminée</span>
+      <div class="score">${good}/${words.length}</div>
+      <h2>${missed.length ? "Du premier coup" : "Sans faute, bravo !"}</h2>
+      <p>${missed.length ? "Ces mots ont été revus jusqu'à ce que tu les saches. Refais-les demain pour les fixer." : "Reviens demain pour vérifier que ça tient."}</p>
+      ${missed.length ? `<ul class="missed">${missed.map(w => `<li><b>${esc(w.en)}</b> = ${esc(w.fr)}</li>`).join("")}</ul>` : ""}
+      <div class="row">
+        ${missed.length ? `<button class="primary" id="again-missed">Revoir mes erreurs</button>` : ""}
+        <button class="${missed.length ? "secondary" : "primary"}" id="again">Refaire tout le paquet</button>
+        <button class="secondary" id="home">Accueil</button>
+      </div>
+    </div>`;
+  const deck = s.deck;
+  const m = document.getElementById("again-missed");
+  if (m) m.onclick = () => start(deck, missed);
+  document.getElementById("again").onclick = () => start(deck);
+  document.getElementById("home").onclick = home;
+}
+
+document.addEventListener("keydown", e => {
+  if (!session || !document.getElementById("card")) return;
+  if (e.key === " " || e.key === "Enter") { if (e.target.tagName !== "BUTTON" || e.target.id === "card") { e.preventDefault(); flip(); } }
+  else if (e.key === "1") answer(false);
+  else if (e.key === "2") answer(true);
+});
+
+home();
+</script>
